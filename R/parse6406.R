@@ -8,9 +8,17 @@ parse6406 <- function(call, yearmonth) {
   
   ## extract year from yearmonth
   year <- substr(x=yearmonth, start=1, stop=4)
+  month <- substr(x=yearmonth, start=5, stop=6)
   
   ## read 6406 file
-  lines6406 <- readLines(retrieve6406(call, yearmonth))
+  file6406 <- retrieve6406(call, yearmonth)
+  if(is.na(file6406)) {
+    warn.msg <- paste("ASOS one minute data for", call, "station, year",
+                      year, "month", month, "is unavailable.")
+    warning(warn.msg)
+    return(NA)
+  }
+  lines6406 <- readLines(file6406, warn=F)
   
   ## remove brackets
   lines6406 <- gsub("\\[", " ", lines6406)

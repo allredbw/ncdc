@@ -7,6 +7,7 @@ retrieve6406 <- function(call, yearmonth) {
   
   ## extract year from yearmonth
   year <- substr(x=yearmonth, start=1, stop=4)
+  month <- substr(x=yearmonth, start=5, stop=6)
   file6406 <- paste("64060", call, yearmonth, ".dat", sep="")
   
   ## check to see if file exists in tempdir()
@@ -14,11 +15,17 @@ retrieve6406 <- function(call, yearmonth) {
   if(length(Sys.glob(file.path(tempdir(),file6406)))==1) {
     return(file.path(tempdir(),file6406))
   } else {
+    ## set path for 6406 file on NCDC ftp server
     NCDCpath <- paste("ftp://anonymous:email", 
                       "@ftp.ncdc.noaa.gov/pub/data/asos-onemin/6406-",
                       year, "/64060", call, yearmonth, ".dat", 
                       sep="")
+    ## set local path to save 6406 file in temp directory
     localpath <- paste(tempdir(), "/", basename(NCDCpath), sep="")
+    ## verify 6406 exists and is retrievable
+    if(verify6406(path=NCDCpath)==F) {
+      return(NA)
+    }
     download.file(url=NCDCpath, destfile=localpath, quiet=T)
     return(file.path(tempdir(),file6406))
   }
