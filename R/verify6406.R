@@ -1,6 +1,5 @@
 verify6406<- function(path) {
   ## Verify that the requested 6406 exists
-  ## http://www.mesonet.org/sites/geomeso.csv is available.
   ##
   ## Arguments:
   ##  path: path to 6406 on NCDC ftp site
