@@ -60,8 +60,8 @@ parse6406 <- function(call, yearmonth) {
                                         return(as.numeric(x[, last-4]))})
   ## time
   TIME <- sapply(list6406, function(x) {substr(x[, 2], 4, 15)})
-  ## get UTC offset from asos.stns
-  utcoffset <- asos.stns$UTC[match(substr(call, 2, 4), asos.stns$CALL)]
+  ## get UTC offset from asosstns
+  utcoffset <- asosstns$UTC[match(substr(call, 2, 4), asosstns$CALL)]
   ## use sprintf() to convert to character, "-0000" or "+0000"
   utcoffset <- sprintf("%03+d", utcoffset)
   TIME <- as.POSIXct(paste(TIME, utcoffset, "00", sep=""), 
