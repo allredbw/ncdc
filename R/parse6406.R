@@ -18,6 +18,7 @@ parse6406 <- function(call, yearmonth, force=F) {
     warning(warn.msg)
     return(NA)
   }
+  ## read in 6406 file
   lines6406 <- readLines(file6406, warn=F)
   
   ## remove brackets
@@ -31,33 +32,61 @@ parse6406 <- function(call, yearmonth, force=F) {
                                             colnames(x) <- 1:length(x)
                                             x[x=="M"] <- NA
                                             return(x)})
-  ## some 6406 files contain a filed with '0000' or similar;
-  ## this field is unidentified
-  ## replace with NA
-  list6406 <- lapply(list6406, function(x) {if(any(grepl(x=x, 
-                                                         pattern="^000+")==T)){ 
-    x[, grep(x=x, 
-             pattern="^000+")] <- NA
-    return(x)} else x})
+  
+  ## find pressure positions
+  pres.pos <- lapply(list6406, FUN=grep, pattern="^\\d{2}\\.\\d{3}")
+  
+  ## pressure sensors, inches of mecury (Hg)
+  PRES <- mapply(list6406, pres.pos, FUN=function(x, y) {
+    if(length(y)==0) {
+      return(NULL)
+    }
+    if(length(y)==1) {
+      PRS1 <- as.numeric(x[y[1]])
+      return(data.frame(PRS1))
+    }
+    if(length(y)==2) {
+      PRS1 <- as.numeric(x[y[1]])
+      PRS2 <- as.numeric(x[y[2]])
+      return(data.frame(PRS1, PRS2))
+    }
+    if(length(y)==3) {
+      PRS1 <- as.numeric(x[y[1]])
+      PRS2 <- as.numeric(x[y[2]])
+      PRS3 <- as.numeric(x[y[3]])
+      return(data.frame(PRS1, PRS2, PRS3))
+    }
+  }, SIMPLIFY=F)
+  
+  ## extract pressure values from PRES list
+  PRS1 <- sapply(PRES, function(x) if(length(x)>=1) x$PRS1 else NA)
+  PRS2 <- sapply(PRES, function(x) if(length(x)>=2) x$PRS2 else NA)
+  PRS3 <- sapply(PRES, function(x) if(length(x)>=3) x$PRS3 else NA)
+  
+  ## find precipitation positions
+  prec.pos <- lapply(list6406, FUN=grep, pattern="^\\d\\.\\d{2}")
+  
+  ## precipitatio, inches
+  PCPN <- mapply(list6406, prec.pos, FUN=function(x, y) {
+    if(length(y)==0) return(NA)
+    else as.numeric(x[y[1]])
+  })
+  
+  ## find temperature positions
+  temp.pos <- lapply(list6406, FUN=grep, pattern="^(-)?\\d{0,2}?\\d{1}$")
+  
   ## temperature (dry bulb), Fahrenheit
-  TMPD <- sapply(list6406, function(x) {last <- length(x)
-                                        return(as.integer(x[, last-1]))})
+  TMPD <- mapply(list6406, temp.pos, FUN=function(x, y) {
+    if(length(y)<2) return(NA)
+    else return(as.integer(x[y[1]]))
+  })
+  
   ## dew-point temperature, Fahrenheit
-  DPTP <- sapply(list6406, function(x) {last <- length(x) 
-                                        return(as.integer(x[, last]))})
-  ## precipitation, inches
-  PCPN <- sapply(list6406, function(x) {if(length(x)>10) {
-    return(as.numeric(x[, 5]))} else {
-      return(as.numeric(x[, 4]))}})
-  ## pressure sensor 1, inches of mecury (Hg)
-  PRS1 <- sapply(list6406, function(x) {last <- length(x)
-                                        return(as.numeric(x[, last-2]))})
-  ## pressure sensor 2, inches of mecury (Hg)
-  PRS2 <- sapply(list6406, function(x) {last <- length(x)
-                                        return(as.numeric(x[, last-3]))})
-  ## pressure sensor 3, inches of mecury (Hg)
-  PRS3 <- sapply(list6406, function(x) {last <- length(x)
-                                        return(as.numeric(x[, last-4]))})
+  DPTP <- mapply(list6406, temp.pos, FUN=function(x, y) {
+    if(length(y)<2) return(NA)
+    else return(as.integer(x[y[2]]))
+  })
+  
   ## time
   TIME <- sapply(list6406, function(x) {substr(x[, 2], 4, 15)})
   ## get UTC offset from asosstns
