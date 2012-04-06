@@ -1,4 +1,4 @@
-parse6406 <- function(call, yearmonth) {
+parse6406 <- function(call, yearmonth, force=F) {
   ## Parse 6406 file; convert to usable dataframe
   ## Arguments:
   ##  call: four letter call sign
@@ -11,7 +11,7 @@ parse6406 <- function(call, yearmonth) {
   month <- substr(x=yearmonth, start=5, stop=6)
   
   ## read 6406 file
-  file6406 <- retrieve6406(call, yearmonth)
+  file6406 <- retrieve6406(call, yearmonth, force=force)
   if(is.na(file6406)) {
     warn.msg <- paste("ASOS one minute data for", call, "station, year",
                       year, "month", month, "is unavailable.")

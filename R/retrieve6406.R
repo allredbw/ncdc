@@ -1,4 +1,4 @@
-retrieve6406 <- function(call, yearmonth) {
+retrieve6406 <- function(call, yearmonth, force) {
   ## Downlaod 6406 file from NCDC to temporary file
   ## Arguments:
   ##  call: four letter call sign
@@ -12,7 +12,7 @@ retrieve6406 <- function(call, yearmonth) {
   
   ## check to see if file exists in tempdir()
   ## if not, download it
-  if(length(Sys.glob(file.path(tempdir(),file6406)))==1) {
+  if(length(Sys.glob(file.path(tempdir(),file6406)))==1 & force==F) {
     return(file.path(tempdir(),file6406))
   } else {
     ## set path for 6406 file on NCDC ftp server
