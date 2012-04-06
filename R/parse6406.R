@@ -13,7 +13,7 @@ parse6406 <- function(call, yearmonth, force=F) {
   ## read 6406 file
   file6406 <- retrieve6406(call, yearmonth, force=force)
   if(is.na(file6406)) {
-    warn.msg <- paste("ASOS one minute data for", call, "station, year",
+    warn.msg <- paste("ASOS 6406 one minute data for", call, "station, year",
                       year, "month", month, "is unavailable.")
     warning(warn.msg)
     return(NA)
