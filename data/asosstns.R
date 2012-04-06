@@ -33,7 +33,7 @@
     download.file(url=url, destfile=localpath, quiet=T)
     
     ## read in file
-    asosstns <- read.fwf("asos-stations.txt", as.is=T, comment.char="", skip=2,
+    asosstns <- read.fwf(localpath, as.is=T, comment.char="", skip=2,
                          strip.white=T,
                          width=c(8, -1, 5, -1, 6, -1, 4, -1, 30, -1, 30, -1, 20, 
                                  -1, 2, -1, 30, -1, 9, -1, 10, -1, 6, -1, 3, -1, 
