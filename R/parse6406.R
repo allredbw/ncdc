@@ -92,7 +92,7 @@ parse6406 <- function(call, yearmonth, force=F) {
   ## get UTC offset from asosstns
   utcoffset <- asosstns$UTC[match(substr(call, 2, 4), asosstns$CALL)]
   ## use sprintf() to convert to character, "-0000" or "+0000"
-  utcoffset <- sprintf("%03+d", utcoffset)
+  utcoffset <- sprintf("%+03d", utcoffset)
   TIME <- as.POSIXct(paste(TIME, utcoffset, "00", sep=""), 
                      format="%Y%m%d%H%M%z")
   ## return as data frame
