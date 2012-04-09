@@ -65,7 +65,7 @@ parse6405 <- function(call, yearmonth, force=F) {
   ## utc offset
   utcoffset <- asosstns$UTC[match(substr(call, 2, 4), asosstns$CALL)]
   ## use sprintf() to convert to character, "-0000" or "+0000"
-  utcoffset <- sprintf("%03+d", utcoffset)
+  utcoffset <- sprintf("%+03d", utcoffset)
   
   timeexpr <- regexpr(text=lines6405, pattern=time.pattern)
   TIME <- substr(lines6405, start=timeexpr+4, stop=timeexpr+15)
