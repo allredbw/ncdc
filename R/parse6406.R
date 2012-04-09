@@ -26,12 +26,10 @@ parse6406 <- function(call, yearmonth, force=F) {
   lines6406 <- gsub("]", " ", lines6406)
   ## split into list at whitespaces; treat multiple whitespaces as one
   list6406 <- strsplit(lines6406, " +")
-  ## convert each list element to a data frame
-  list6406 <- lapply(list6406, function(x) {x <- as.data.frame(t(x), 
-                                                               stringsAsFactors=F)
-                                            colnames(x) <- 1:length(x)
-                                            x[x=="M"] <- NA
-                                            return(x)})
+  ## remove Ms
+  list6406 <- lapply(list6406, function(x) {
+    x[which(x=="M")] <- NA
+    return(x)})
   
   ## find pressure positions
   pres.pos <- lapply(list6406, FUN=grep, pattern="^\\d{2}\\.\\d{3}")
@@ -88,7 +86,7 @@ parse6406 <- function(call, yearmonth, force=F) {
   })
   
   ## time
-  TIME <- sapply(list6406, function(x) {substr(x[, 2], 4, 15)})
+  TIME <- sapply(list6406, function(x) {substr(x[2], 4, 15)})
   ## get UTC offset from asosstns
   utcoffset <- asosstns$UTC[match(substr(call, 2, 4), asosstns$CALL)]
   ## use sprintf() to convert to character, "-0000" or "+0000"
