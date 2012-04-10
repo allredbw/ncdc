@@ -64,7 +64,7 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     all6405 <- vector(mode="list", length=length(dates.yearmonth))
     
     ## retrieve files
-    lapply(dates.yearmonth, FUN=retrieve6405, call=call,
+    paths6405 <- lapply(dates.yearmonth, FUN=retrieve6405, call=call,
            force=overwrite.download)
     
     ## multicore options
@@ -84,11 +84,15 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     }
     
     ##  Subset 6405 data according to begin and end time
-    all6405[[1]] <- subset(all6405[[1]], TIME>=begintime.local 
-                           & TIME<=endtime.local)
-    all6405[[length(all6405)]] <- subset(all6405[[length(all6405)]],
-                                         TIME>=begintime.local 
-                                         & TIME<=endtime.local)
+    if(all(is.na(paths6405[[1]])!=T)) {
+      all6405[[1]] <- subset(all6405[[1]], TIME>=begintime.local 
+                             & TIME<=endtime.local)
+    }
+    if(all(is.na(paths6405[[length(paths6405)]])!=T)) {
+      all6405[[length(all6405)]] <- subset(all6405[[length(all6405)]],
+                                           TIME>=begintime.local 
+                                           & TIME<=endtime.local)
+    }
   }
   
   ## 6406 files
@@ -98,8 +102,8 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     all6406 <- vector(mode="list", length=length(dates.yearmonth))
     
     ## retrieve files
-    lapply(dates.yearmonth, FUN=retrieve6406, call=call,
-           force=overwrite.download)
+    paths6406 <- lapply(dates.yearmonth, FUN=retrieve6406, call=call,
+                    force=overwrite.download)
     ## mutlicore options
     if(mcores==T | is.numeric(mcores)==T) {
       if(mcores==T) ncores <- detectCores()-1
@@ -117,21 +121,34 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     }
     
     ##  Subset 6406 data according to begin and end time
-    all6406[[1]] <- subset(all6406[[1]], TIME>=begintime.local 
-                           & TIME<=endtime.local)
-    all6406[[length(all6406)]] <- subset(all6406[[length(all6406)]],
-                                         TIME>=begintime.local 
-                                         & TIME<=endtime.local)
+    if(all(is.na(paths6406[[1]])!=T)) {
+      all6406[[1]] <- subset(all6406[[1]], TIME>=begintime.local 
+                             & TIME<=endtime.local)
+    }
+    if(all(is.na(paths6406[[length(paths6406)]])!=T)) {
+      all6406[[length(all6406)]] <- subset(all6406[[length(all6406)]],
+                                           TIME>=begintime.local 
+                                           & TIME<=endtime.local)
+    }
   }
   
   ## return appropriate files as data frames
   if(file6405==T && file6406==T) {
+    if(all(is.na(paths6405)) && all(is.na(paths6406))) {
+      stop("No files available for download", call.=F)
+    }
     data6405 <- do.call(rbind, all6405)
     data6406 <- do.call(rbind, all6406)
     return(merge(data6406, data6405, all=T))
   } else if(file6405==T && file6406==F) {
+    if(all(is.na(paths6405))) {
+      stop("No files available for download", call.=F)
+    }
     return(do.call(rbind, all6405))
   } else if(file6405==F && file6406==T) {
+    if(all(is.na(paths6406))) {
+      stop("No files available for download", call.=F)
+    }
     return(do.call(rbind, all6406))
   }
 }
