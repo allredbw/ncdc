@@ -51,8 +51,8 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
   }
   
   dates <- seq(from=as.Date(begintime.gmt+utcoffset*60*60), 
-               to=as.Date(endtime.gmt+utcoffset*60*60), by="month")
-  dates.yearmonth <- format(dates, format="%Y%m")
+               to=as.Date(endtime.gmt+utcoffset*60*60), by="day")
+  dates.yearmonth <- unique(format(dates, format="%Y%m"))
   
   ## 6405 files
   if(file6405==T) {
