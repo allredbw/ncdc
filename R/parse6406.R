@@ -32,7 +32,7 @@ parse6406 <- function(call, yearmonth, force=F) {
     return(x)})
   
   ## find pressure positions
-  pres.pos <- lapply(list6406, FUN=grep, pattern="^\\d{2}\\.\\d{3}$")
+  pres.pos <- lapply(list6406, FUN=grep, pattern="^[2-3]{1}\\d{1}\\.\\d{3}$")
   
   ## pressure sensors, inches of mecury (Hg)
   PRES <- mapply(list6406, pres.pos, FUN=function(x, y) {
