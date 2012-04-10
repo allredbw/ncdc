@@ -78,7 +78,14 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
         stopCluster(c1)
       } } else { all6405 <- lapply(dates.yearmonth, FUN=parse6405, call=call, 
                                  force=F)
-      }
+    }
+    
+    ##  Subset 6405 data according to begin and end time
+    all6405[[1]] <- subset(all6405[[1]], TIME>=begintime.local 
+                           & TIME<=endtime.local)
+    all6405[[length(all6405)]] <- subset(all6405[[length(all6405)]],
+                                         TIME>=begintime.local 
+                                         & TIME<=endtime.local)
   }
   
   ## 6406 files
@@ -104,7 +111,14 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
         stopCluster(c1)
       } } else { all6406 <- lapply(dates.yearmonth, FUN=parse6406, call=call, 
                                  force=F)
-      }
+    }
+    
+    ##  Subset 6406 data according to begin and end time
+    all6406[[1]] <- subset(all6406[[1]], TIME>=begintime.local 
+                           & TIME<=endtime.local)
+    all6406[[length(all6406)]] <- subset(all6406[[length(all6406)]],
+                                         TIME>=begintime.local 
+                                         & TIME<=endtime.local)
   }
   
   ## return appropriate files as data frames
