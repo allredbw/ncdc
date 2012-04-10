@@ -9,7 +9,10 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
   ##  file6406: logical indicating to get 6406 files; temp, pressure, precip
   ## Return: data frame
   
-  if(file6405==F && file6406==F) stop()
+  if(file6405==F && file6406==F) {
+    stop.msg <- paste("file6405==F and files6406==F; no files to download.")
+    stop(stop.msg)
+  }
   ## convert call to uppercase
   call <- toupper(call)
   
