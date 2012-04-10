@@ -74,7 +74,7 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
       } else if(.Platform$OS.type=="windows") {
         c1 <- makeCluster(getOption("cl.cores", ncores))
         all6405 <- parLapply(c1, dates.yearmonth, fun=parse6405, call=call,
-                             force=F, mc.cores=ncores)
+                             force=F)
         stopCluster(c1)
       } } else { all6405 <- lapply(dates.yearmonth, FUN=parse6405, call=call, 
                                  force=F)
@@ -107,7 +107,7 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
       } else if(.Platform$OS.type=="windows") {
         c1 <- makeCluster(getOption("cl.cores", ncores))
         all6406 <- parLapply(c1, dates.yearmonth, fun=parse6406, call=call,
-                             force=F, mc.cores=ncores)
+                             force=F)
         stopCluster(c1)
       } } else { all6406 <- lapply(dates.yearmonth, FUN=parse6406, call=call, 
                                  force=F)
