@@ -41,25 +41,25 @@ parse6406 <- function(call, yearmonth, force=F) {
     }
     if(length(y)==1) {
       PRS1 <- as.numeric(x[y[1]])
-      return(data.frame(PRS1))
+      return(as.matrix(PRS1))
     }
     if(length(y)==2) {
       PRS1 <- as.numeric(x[y[1]])
       PRS2 <- as.numeric(x[y[2]])
-      return(data.frame(PRS1, PRS2))
+      return(as.matrix(cbind(PRS1, PRS2)))
     }
     if(length(y)==3) {
       PRS1 <- as.numeric(x[y[1]])
       PRS2 <- as.numeric(x[y[2]])
       PRS3 <- as.numeric(x[y[3]])
-      return(data.frame(PRS1, PRS2, PRS3))
+      return(as.matrix(cbind(PRS1, PRS2, PRS3)))
     }
   }, SIMPLIFY=F)
   
   ## extract pressure values from PRES list
-  PRS1 <- sapply(PRES, function(x) if(length(x)>=1) x$PRS1 else NA)
-  PRS2 <- sapply(PRES, function(x) if(length(x)>=2) x$PRS2 else NA)
-  PRS3 <- sapply(PRES, function(x) if(length(x)>=3) x$PRS3 else NA)
+  PRS1 <- sapply(PRES, function(x) if(length(x)>=1) x[1] else NA)
+  PRS2 <- sapply(PRES, function(x) if(length(x)>=2) x[2] else NA)
+  PRS3 <- sapply(PRES, function(x) if(length(x)>=3) x[2] else NA)
   
   ## find precipitation positions
   prec.pos <- lapply(list6406, FUN=grep, pattern="^\\d\\.\\d{2}$")
