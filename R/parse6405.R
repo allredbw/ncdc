@@ -16,7 +16,7 @@ parse6405 <- function(call, yearmonth, force=F) {
   month <- substr(x=yearmonth, start=5, stop=6)
   
   ## read 6405 file
-  file6405 <- retrieve6405(call, yearmonth, force=force)
+  file6405 <- retrieveasos(call, yearmonth, file=6405, force=force)
   if(is.na(file6405)) {
     warn.msg <- paste("ASOS 6405 (wind) one minute data for", call, 
                       "station, year", year, "month", month, "is unavailable.")
