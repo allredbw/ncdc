@@ -1,8 +1,8 @@
-verify6405<- function(path) {
-  ## Verify that the requested 6405 exists
+verify<- function(path) {
+  ## Verify that the requested file exists
   ##
   ## Arguments:
-  ##  path: path to 6405 on NCDC ftp site
+  ##  path: path to file on NCDC ftp site
   ## Returns: logical indicating success
   internetoption <- getOption("internet.info")
   options(show.error.messages=FALSE, internet.info=3)
