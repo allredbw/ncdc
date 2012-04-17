@@ -1,5 +1,5 @@
 retrieveasos <- function(call, yearmonth, file, force) {
-  ## Downlaod 6405 file from NCDC to temporary file
+  ## Downlaod 6405 or 6406 file from NCDC to temporary file
   ## Arguments:
   ##  call: four letter call sign
   ##  yearmonth: character string indicating year, month; e.g. Jan 2012: 201201
