@@ -64,8 +64,8 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     all6405 <- vector(mode="list", length=length(dates.yearmonth))
     
     ## retrieve files
-    paths6405 <- lapply(dates.yearmonth, FUN=retrieve6405, call=call,
-           force=overwrite.download)
+    paths6405 <- lapply(dates.yearmonth, FUN=retrieveasos, call=call, 
+                        file=6405,force=overwrite.download)
     
     ## multicore options
     if(mcores==T | is.numeric(mcores)==T) {
@@ -102,8 +102,8 @@ asos <- function(call, begintime, endtime, file6405=T, file6406=T,
     all6406 <- vector(mode="list", length=length(dates.yearmonth))
     
     ## retrieve files
-    paths6406 <- lapply(dates.yearmonth, FUN=retrieve6406, call=call,
-                    force=overwrite.download)
+    paths6406 <- lapply(dates.yearmonth, FUN=retrieveasos, call=call,
+                        file=6406, force=overwrite.download)
     ## mutlicore options
     if(mcores==T | is.numeric(mcores)==T) {
       if(mcores==T) ncores <- detectCores()-1
