@@ -23,7 +23,7 @@ retrieve6406 <- function(call, yearmonth, force) {
     ## set local path to save 6406 file in temp directory
     localpath <- paste(tempdir(), "/", basename(NCDCpath), sep="")
     ## verify 6406 exists and is retrievable
-    if(verify6406(path=NCDCpath)==F) {
+    if(verify(path=NCDCpath)==F) {
       return(NA)
     }
     download.file(url=NCDCpath, destfile=localpath, quiet=T)
