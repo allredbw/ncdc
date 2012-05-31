@@ -1,4 +1,4 @@
-parseisd <- function(localpath) {
+parseisdlite <- function(localpath) {
   ## Parse and format ISD Lite file
   ## Arguments:
   ##  localpath: path to ISD Lite file; returned by retrievedisd()

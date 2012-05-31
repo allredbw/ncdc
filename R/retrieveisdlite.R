@@ -1,4 +1,4 @@
-retrieveisd <- function(usaf, wban, year, force) {
+retrieveisdlite <- function(usaf, wban, year, force) {
   ## Retreive ISD lite file for a given station, year
   ## Arguments:
   ##  usaf: Air Force catalog station number
