@@ -23,4 +23,6 @@ parseisdlite <- function(localpath) {
   fileisd$TMPD <- fileisd$TMPD / 10
   fileisd$DPTP <- fileisd$DPTP / 10
   fileisd$M2SP <- fileisd$M2SP / 10
+  
+  return(fileisd)
 }
