@@ -1,4 +1,4 @@
-isdlite <- function(usaf, wban, begintime, endtime, overwrite.downlaod=F) {
+isdlite <- function(usaf, wban, begintime, endtime, overwrite.download=F) {
   ## Retrieve and format NOAA ISD-Lite data for given station and time period.
   ## Arguments:
   ##  usaf: Air Force catalog station number
