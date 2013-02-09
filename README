@@ -1,0 +1,14 @@
+ncdc
+
+Retrieve data from the National Climatic Data Center.
+
+ncdc is intended to be a simple R package that retrieves data from the National
+Climatic Data Center (http://www.ncdc.noaa.gov/). This package is under "not so
+active" development, thus updates are infrequent and intermittent at
+best. Currently only ASOS one minute and ISD-Lite data are retrievable.
+
+ASOS one minute ftp://ftp.ncdc.noaa.gov/pub/data/asos-onemin/README.TXT
+ISD-Lite ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-lite/isd-lite-format.txt
+
+Data access may be restricted by organization and/or location. The authors and
+maintainers of ncdc assume no responsibility for the use or misuse of ncdc.
